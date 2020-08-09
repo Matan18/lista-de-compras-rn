@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   StatusBar,
@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { colors } from '../../color';
 import { ListProps } from '../../Routes/routetypes';
+import styles from './styles';
 
 const data = [
   {
@@ -55,22 +55,14 @@ const List: React.FC<ListProps> = ({ navigation }) => {
   navigation.setOptions({
     header: () => {
       return (
-        <View
-          style={{
-            width: 360,
-            backgroundColor: colors.darkGreen,
-            height: 55,
-            justifyContent: 'center',
-            alignItems: 'flex-end',
-          }}
-        >
+        <View style={styles.headerView}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Buying');
             }}
-            style={{ margin: 10 }}
+            style={styles.headerButton}
           >
-            <Text style={{ fontSize: 20 }}>Começar</Text>
+            <Text style={styles.headerButtonText}>Começar</Text>
           </TouchableOpacity>
         </View>
       );
@@ -79,74 +71,32 @@ const List: React.FC<ListProps> = ({ navigation }) => {
   const [items, setItems] = useState(data);
   const [newItem, setNewItem] = useState('');
 
-  function handleAddItem() {
+  const handleAddItem = useCallback(() => {
     setItems([...items, { name: newItem }]);
-  }
+  }, [setItems, items, newItem]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.white }}>
+    <View style={styles.container}>
       <StatusBar barStyle="default" />
       <FlatList
         data={items}
         keyExtractor={({ name }) => name}
         renderItem={({ item }) => (
-          <View
-            style={{
-              height: 50,
-              marginLeft: 10,
-              marginRight: 10,
-              borderBottomWidth: 0.3,
-              borderColor: '#cccccc',
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              style={{
-                marginLeft: 15,
-                fontSize: 20,
-              }}
-            >
-              {item.name}
-            </Text>
+          <View style={styles.productContainer}>
+            <Text style={styles.productText}>{item.name}</Text>
           </View>
         )}
       />
-
-      <View
-        style={{
-          height: 70,
-          backgroundColor: colors.white,
-          flexDirection: 'row',
-        }}
-      >
+      <View style={styles.newProduct}>
         <TextInput
           value={newItem}
           onChangeText={setNewItem}
           placeholder="Novo produto"
-          style={{
-            height: 40,
-            width: 270,
-            fontSize: 20,
-            margin: 10,
-            padding: 5,
-            borderBottomWidth: 2,
-            borderColor: '#bbb',
-          }}
+          style={styles.newProductInput}
         />
 
-        <TouchableOpacity
-          onPress={handleAddItem}
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            margin: 10,
-            backgroundColor: colors.almostDarkGreen,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Icon name="plus" size={20} style={{ color: colors.green }} />
+        <TouchableOpacity onPress={handleAddItem} style={styles.fabNewProduct}>
+          <Icon name="plus" size={20} style={styles.icon} />
         </TouchableOpacity>
       </View>
     </View>
