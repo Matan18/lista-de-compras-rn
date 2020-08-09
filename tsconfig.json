@@ -1,12 +1,24 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "esnext",
+      "ES2016"
+    ],
+    "target": "es6",
+    "module": "es6",
     "jsx": "react-native",
-    "lib": ["dom", "esnext"],
+    "sourceMap": true,
     "moduleResolution": "node",
-    "noEmit": true,
     "skipLibCheck": true,
+    "noEmit": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false
   }
 }
