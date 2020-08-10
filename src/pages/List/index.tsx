@@ -93,6 +93,7 @@ const List: React.FC<ListProps> = ({ navigation }) => {
           onChangeText={setNewItem}
           placeholder="Novo produto"
           style={styles.newProductInput}
+          onEndEditing={handleAddItem}
         />
 
         <TouchableOpacity onPress={handleAddItem} style={styles.fabNewProduct}>
