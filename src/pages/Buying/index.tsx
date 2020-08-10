@@ -91,6 +91,7 @@ const Buying: React.FC<BuyingProps> = ({ navigation }) => {
 
   const handleUpdateItem = useCallback(
     (item: Product) => {
+      console.log(item);
       const list = items;
       const index = items.findIndex(prod => prod.id === item.id);
       const product = items[index];

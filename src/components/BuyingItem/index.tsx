@@ -10,36 +10,53 @@ interface BuyingItemProps {
 }
 
 const BuyingItem: React.FC<BuyingItemProps> = ({ item, updateItem }) => {
-  const [product, setProduct] = useState(item);
+  const [checked, setChecked] = useState(item.checked);
+  const [price, setPrice] = useState(item.price);
 
-  const handleChangeChecked = useCallback(() => {
-    setProduct({ ...product, checked: !product.checked });
-  }, [setProduct, product]);
+  const handleChangeChecked = useCallback(
+    (value: boolean) => {
+      setChecked(!value);
+      updateItem({ ...item, checked: !value, price });
+    },
+    [setChecked],
+  );
 
-  useEffect(() => {
-    updateItem(product);
-  }, [product, updateItem]);
-
-  const price = useMemo(() => {
-    const test = product.price.toFixed(2);
+  const priceText = useMemo(() => {
+    const test = price.toFixed(2);
     return test;
-  }, [product]);
+  }, [price]);
+
+  const handleEndEditing = useCallback(
+    (e: string) => {
+      setPrice(parseFloat(e));
+      updateItem({ ...item, checked, price: parseFloat(e) });
+    },
+    [setPrice],
+  );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.nameText}>{product.name}</Text>
+      <Text style={styles.nameText}>{item.name}</Text>
       <View style={styles.statsView}>
         <Text style={styles.currencyText}>R$</Text>
         <TextInput
           style={styles.priceText}
           onEndEditing={e => {
-            setProduct({ ...product, price: parseFloat(e.nativeEvent.text) });
+            handleEndEditing(e.nativeEvent.text);
           }}
-          defaultValue={price}
+          defaultValue={priceText}
+          // onChangeText={e => {
+          //   setPrice(parseFloat(e));
+          // }}
           keyboardType="decimal-pad"
           returnKeyType="done"
         />
-        <CheckBox value={product.checked} onValueChange={handleChangeChecked} />
+        <CheckBox
+          value={checked}
+          onValueChange={() => {
+            handleChangeChecked(checked);
+          }}
+        />
       </View>
     </View>
   );
