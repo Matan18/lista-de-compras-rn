@@ -3,14 +3,13 @@ import { colors } from '../../color';
 
 const styles = StyleSheet.create({
   headerView: {
-    width: 360,
     backgroundColor: colors.darkGreen,
     height: 55,
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   headerButton: {
-    margin: 10,
+    margin: 15,
   },
   headerButtonText: {
     fontSize: 20,
