@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { View, Text, CheckBox, TextInput } from 'react-native';
 import { Product } from '../../database/entities/Product';
 
@@ -18,7 +18,7 @@ const BuyingItem: React.FC<BuyingItemProps> = ({ item, updateItem }) => {
       setChecked(!value);
       updateItem({ ...item, checked: !value, price });
     },
-    [setChecked],
+    [item, price, updateItem],
   );
 
   const priceText = useMemo(() => {
@@ -31,7 +31,7 @@ const BuyingItem: React.FC<BuyingItemProps> = ({ item, updateItem }) => {
       setPrice(parseFloat(e));
       updateItem({ ...item, checked, price: parseFloat(e) });
     },
-    [setPrice],
+    [setPrice, updateItem, item, checked],
   );
 
   return (
