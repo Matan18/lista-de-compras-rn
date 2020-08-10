@@ -12,72 +12,84 @@ const data: Product[] = [
     id: '1',
     checked: false,
     price: 1.5,
+    quantity: 1,
   },
   {
     name: 'feijão',
     id: '2',
     checked: false,
     price: 2,
+    quantity: 1,
   },
   {
     name: 'batata',
     id: '3',
     checked: false,
     price: 3.5,
+    quantity: 1,
   },
   {
     name: 'papel higiênico',
     id: '4',
     checked: false,
     price: 4,
+    quantity: 1,
   },
   {
     name: 'maça',
     id: '5',
     checked: false,
     price: 5,
+    quantity: 1,
   },
   {
     name: 'banana',
     id: '6',
     checked: false,
     price: 1,
+    quantity: 1,
   },
   {
     name: 'laranja',
     id: '7',
     checked: false,
     price: 3,
+    quantity: 1,
   },
   {
     name: 'shampoo',
     id: '8',
     checked: false,
     price: 1.5,
+    quantity: 1,
   },
   {
     name: 'condicionador',
     id: '9',
     checked: false,
     price: 2.5,
+    quantity: 1,
   },
   {
     name: 'brahma',
     id: '10',
     checked: false,
     price: 27.5,
+    quantity: 1,
   },
   {
     name: 'leite condensado',
     id: '11',
     checked: false,
     price: 4.25,
+    quantity: 1,
   },
   {
     name: 'pente',
     id: '12',
     checked: false,
     price: 2.5,
+    quantity: 1,
   },
 ];
 
@@ -97,6 +109,7 @@ const Buying: React.FC<BuyingProps> = ({ navigation }) => {
       const product = items[index];
       product.checked = item.checked;
       product.name = item.name;
+      product.quantity = item.quantity;
       product.price = item.price;
       list[index] = product;
       setItems([...list]);
@@ -106,7 +119,8 @@ const Buying: React.FC<BuyingProps> = ({ navigation }) => {
   const totalValue = useMemo(() => {
     const value = items.reduce((sum, item) => {
       if (item.checked) {
-        return sum + item.price;
+        const multiple = item.price * item.quantity;
+        return sum + multiple;
       }
       return sum;
     }, 0);

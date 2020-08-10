@@ -11,6 +11,9 @@ export class Product {
   @Column('decimal')
   price: number;
 
+  @Column('integer')
+  quantity: number;
+
   @Column()
   checked: boolean;
 }
