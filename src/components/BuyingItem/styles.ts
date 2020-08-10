@@ -25,6 +25,15 @@ const styles = StyleSheet.create({
     margin: 15,
     fontSize: 20,
     marginRight: 0,
+    marginLeft: 5,
+  },
+  quantityText: {
+    fontSize: 20,
+    borderBottomWidth: 1,
+    width: 25,
+    padding: 0,
+    paddingLeft: 5,
+    textAlign: 'center',
   },
   priceText: {
     fontSize: 20,
