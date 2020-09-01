@@ -14,6 +14,6 @@ export class Product {
   @Column('integer')
   quantity: number;
 
-  @Column()
+  @Column('boolean')
   checked: boolean;
 }
