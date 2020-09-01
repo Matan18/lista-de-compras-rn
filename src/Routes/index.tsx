@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import connect from "../database/connection";
+
 import List from '../pages/List';
 import Buying from '../pages/Buying';
 import { RootStackParams } from './routetypes';
@@ -9,19 +13,39 @@ import { RootStackParams } from './routetypes';
 const AppStack = createStackNavigator<RootStackParams>();
 
 const Routes: React.FC = () => {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function loadConnection() {
+      await connect;
+      setAppIsReady(true);
+    }
+    loadConnection();
+  }, [])
+
+
   return (
-    <NavigationContainer>
-      <AppStack.Navigator>
-        <AppStack.Screen
-          name="List"
-          component={List}
-          options={{
-            headerShown: true,
-          }}
-        />
-        <AppStack.Screen name="Buying" component={Buying} />
-      </AppStack.Navigator>
-    </NavigationContainer>
+    <>
+      {
+        appIsReady ?
+          (
+            <NavigationContainer>
+              <AppStack.Navigator>
+                <AppStack.Screen
+                  name="List"
+                  component={List}
+                  options={{
+                    headerShown: true,
+                  }}
+                />
+                <AppStack.Screen name="Buying" component={Buying} />
+              </AppStack.Navigator>
+            </NavigationContainer >
+          ) : (
+            null
+          )
+      }
+    </>
   );
 };
 
