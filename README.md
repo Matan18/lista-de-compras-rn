@@ -18,9 +18,9 @@ Essa é uma aplicação onde o usuário vai poder fazer uma lista de itens que e
 
 ### Estrutura
 
-Inicialmente a aplicação possui 2 páginas, uma página para adicionar items a lista de compras, outro para utilizar enquanto está fazendo as compras para verificar o total da compra;
+Inicialmente a aplicação possui 2 páginas, uma página para adicionar items a lista de compras, outro para utilizar enquanto está fazendo as compras e verificar o total da compra;
 A primeira página é uma listagem com os nomes e a quantidade que o usuário deseja comprar.
-A segunda página é mais customizada, assim, o cliente poderá dizer o valor da unidade, e se já está no carrinho, automaticamente terá a informação do valor total no carrinho
+A segunda página é mais customizada, assim, o cliente poderá dizer o valor da unidade, e se já está no carrinho, automaticamente terá a informação do valor total da compra.
 
 ### License
 
