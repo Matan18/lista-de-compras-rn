@@ -9,7 +9,7 @@ Essa é uma aplicação onde o usuário vai poder fazer uma lista de itens que e
 * React-Native
 * Expo
 * TypeORM
-* Sqlite
+* Expo-Sqlite
 
 ### Requisitos
 
