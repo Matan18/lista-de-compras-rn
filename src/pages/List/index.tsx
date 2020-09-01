@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   StatusBar,
@@ -9,47 +9,12 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { ListProps } from '../../Routes/routetypes';
-import styles from './styles';
+import ProductReporitory from "../../database/repositories/ProductReporitory";
+import { Product } from "../../database/entities/Product";
 
-const data = [
-  {
-    name: 'arroz',
-  },
-  {
-    name: 'feijão',
-  },
-  {
-    name: 'batata',
-  },
-  {
-    name: 'papel higiênico',
-  },
-  {
-    name: 'maça',
-  },
-  {
-    name: 'banana',
-  },
-  {
-    name: 'laranja',
-  },
-  {
-    name: 'shampoo',
-  },
-  {
-    name: 'condicionador',
-  },
-  {
-    name: 'brahma',
-  },
-  {
-    name: 'leite condensado',
-  },
-  {
-    name: 'pente',
-  },
-];
+import { ListProps } from '../../Routes/routetypes';
+
+import styles from './styles';
 
 const List: React.FC<ListProps> = ({ navigation }) => {
   navigation.setOptions({
@@ -68,11 +33,26 @@ const List: React.FC<ListProps> = ({ navigation }) => {
       );
     },
   });
-  const [items, setItems] = useState(data);
+  const [items, setItems] = useState<Product[]>([]);
   const [newItem, setNewItem] = useState('');
+  const [productRepository, setRepository] = useState(new ProductReporitory());
+
+  useEffect(() => {
+    async function loadItems() {
+      const list = await productRepository.findAll();
+      setItems(list);
+    }
+    loadItems();
+  }, [])
+
 
   const handleAddItem = useCallback(() => {
-    setItems([...items, { name: newItem }]);
+    productRepository.create(
+      {
+        name: newItem
+      }).then(product => {
+        setItems([...items, product]);
+      })
   }, [setItems, items, newItem]);
 
   return (
@@ -80,7 +60,7 @@ const List: React.FC<ListProps> = ({ navigation }) => {
       <StatusBar barStyle="default" />
       <FlatList
         data={items}
-        keyExtractor={({ name }) => name}
+        keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
           <View style={styles.productContainer}>
             <Text style={styles.productText}>{item.name}</Text>
