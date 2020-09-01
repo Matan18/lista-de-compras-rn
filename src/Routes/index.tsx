@@ -13,39 +13,20 @@ import { RootStackParams } from './routetypes';
 const AppStack = createStackNavigator<RootStackParams>();
 
 const Routes: React.FC = () => {
-  const [appIsReady, setAppIsReady] = useState(false);
-
-  useEffect(() => {
-    async function loadConnection() {
-      await connect;
-      setAppIsReady(true);
-    }
-    loadConnection();
-  }, [])
-
 
   return (
-    <>
-      {
-        appIsReady ?
-          (
-            <NavigationContainer>
-              <AppStack.Navigator>
-                <AppStack.Screen
-                  name="List"
-                  component={List}
-                  options={{
-                    headerShown: true,
-                  }}
-                />
-                <AppStack.Screen name="Buying" component={Buying} />
-              </AppStack.Navigator>
-            </NavigationContainer >
-          ) : (
-            null
-          )
-      }
-    </>
+    <NavigationContainer>
+      <AppStack.Navigator>
+        <AppStack.Screen
+          name="List"
+          component={List}
+          options={{
+            headerShown: true,
+          }}
+        />
+        <AppStack.Screen name="Buying" component={Buying} />
+      </AppStack.Navigator>
+    </NavigationContainer >
   );
 };
 
