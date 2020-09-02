@@ -4,11 +4,11 @@
     "slug": "lista-de-compras-rn",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/splash.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/screen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#128C7E"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
