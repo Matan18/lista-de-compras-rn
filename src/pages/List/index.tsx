@@ -39,8 +39,11 @@ const List: React.FC<ListProps> = ({ navigation }) => {
 
   useEffect(() => {
     async function loadItems() {
-      const list = await productRepository.findAll();
-      setItems(list);
+      try {
+        const list = await productRepository.findAll();
+        setItems(list);
+      } catch{
+      }
     }
     loadItems();
   }, [])

@@ -16,8 +16,11 @@ const Buying: React.FC<BuyingProps> = ({ navigation }) => {
 
   useEffect(() => {
     async function loadItems() {
-      const list = await productRepository.findAll();
-      setItems(list);
+      try {
+        const list = await productRepository.findAll();
+        setItems(list);
+      } catch{
+      }
     }
     loadItems();
   }, [])
@@ -33,7 +36,7 @@ const Buying: React.FC<BuyingProps> = ({ navigation }) => {
       productRepository.update(item).then(productUpdated => {
         const list = items;
         const index = items.findIndex(prod => prod.id === productUpdated.id);
-        
+
         list[index] = productUpdated;
         setItems([...list]);
       })
