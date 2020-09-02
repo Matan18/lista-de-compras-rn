@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     height: 50,
+    backgroundColor: '#fff',
     marginLeft: 10,
     marginRight: 10,
     borderBottomWidth: 0.3,
@@ -12,11 +13,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   nameText: {
-    marginLeft: 15,
     fontSize: 20,
+    width: 160,
+    height: 23,
+    marginLeft: 15,
   },
   statsView: {
     width: 160,
+    backgroundColor: '#fff',
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
