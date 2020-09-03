@@ -7,11 +7,6 @@ interface IProductDTO {
     price?: number;
     checked?: boolean;
 }
-interface IUpdateDTO {
-    quantity?: number;
-    price?: number;
-    checked?: boolean;
-}
 
 class ProductRepository {
     private ormRepository: Repository<Product>;
@@ -22,14 +17,14 @@ class ProductRepository {
     async create({ name, quantity = 1, price = 0, checked = false }: IProductDTO): Promise<Product> {
         const checkProductExist = await this.ormRepository.findOne({ where: { name } });
         if (checkProductExist) {
-            return checkProductExist;
+            throw new Error('Item already exists');
         }
         const newProduct = new Product();
         newProduct.name = name;
         newProduct.quantity = quantity;
         newProduct.price = price;
         newProduct.checked = checked;
-        
+
         const product = await this.ormRepository.save(newProduct);
         return product
     }
