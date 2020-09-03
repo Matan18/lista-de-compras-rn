@@ -22,6 +22,13 @@ Inicialmente a aplicação possui 2 páginas, uma página para adicionar items a
 A primeira página é uma listagem com os nomes e a quantidade que o usuário deseja comprar.
 A segunda página é mais customizada, assim, o cliente poderá dizer o valor da unidade, e se já está no carrinho, automaticamente terá a informação do valor total da compra.
 
+### Funcionalidades Atuais 
+
+* Adicionar produto;
+* Remover produto;
+* Limpar lista;
+* Editar preço, quantidade e se já deve ser contado;
+
 ### License
 
 [MIT](LICENSE)
