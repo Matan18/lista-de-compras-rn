@@ -28,9 +28,10 @@ const List: React.FC<ListProps> = ({ navigation }) => {
   navigation.setOptions({
     header: () => {
       return (
-        <Header handleClearList={handleClearList} navigateToBuying={() => navigation.navigate('Buying')} />
+        <Header
+          handleClearList={handleClearList}
+          navigateToBuying={() => navigation.navigate('Buying')} />
       )
-
     },
   });
 

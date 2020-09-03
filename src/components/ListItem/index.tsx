@@ -16,7 +16,6 @@ const ListItem: React.FC<IListItemProps> = ({ item, handleDeleteItem }) => {
     const handleRemoveItem = useCallback((id: string) => {
         handleDeleteItem(id);
         menuRef?.hide();
-
     }, [handleDeleteItem, item, menuRef])
 
     return (

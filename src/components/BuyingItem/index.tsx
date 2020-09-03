@@ -54,7 +54,6 @@ const BuyingItem: React.FC<BuyingItemProps> = ({ item, updateItem, handleDeleteI
   const handleRemoveItem = useCallback((id: string) => {
     handleDeleteItem(id);
     menuRef?.hide();
-
   }, [handleDeleteItem, item, menuRef])
 
   return (

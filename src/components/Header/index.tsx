@@ -18,6 +18,7 @@ const Header: React.FC<IHeaderProps> = ({ handleClearList, navigateToBuying }) =
         handleClearList();
         menuRef?.hide();
     }, [menuRef, handleClearList])
+
     const navigate = useCallback(async () => {
         navigateToBuying();
         menuRef?.hide();

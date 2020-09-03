@@ -16,7 +16,6 @@ const App: React.FC = () => {
         setAppIsReady(true);
       }
       loadConnection();
-
       setTimeout(async () => {
         await SplashScreen.hideAsync();
       }, 1000)
