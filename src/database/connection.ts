@@ -3,10 +3,11 @@ import { createConnection } from "typeorm/browser";
 import { Product } from "../database/entities/Product";
 
 const connect = createConnection({
-    database: 'test',
+    type: 'expo',
+    database: 'sqlite',
     driver: Sqlite,
+    synchronize: true,
     entities: [Product],
-    type: 'expo'
 });
 
 export default connect;
