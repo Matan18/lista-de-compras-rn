@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import {
   View,
   StatusBar,
@@ -9,45 +9,44 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
+import ListItem from "../../components/ListItem";
+
 import ProductReporitory from "../../database/repositories/ProductReporitory";
 import { Product } from "../../database/entities/Product";
 
+import Header from "../../components/Header";
 import { ListProps } from '../../Routes/routetypes';
 
 import styles from './styles';
 
 const List: React.FC<ListProps> = ({ navigation }) => {
+  const [items, setItems] = useState<Product[]>([]);
+  const [newItem, setNewItem] = useState('');
+  const productRepository = useMemo(() => {
+    return new ProductReporitory();
+  }, [])
   navigation.setOptions({
     header: () => {
       return (
-        <View style={styles.headerView}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Buying');
-            }}
-            style={styles.headerButton}
-          >
-            <Text style={styles.headerButtonText}>Começar</Text>
-          </TouchableOpacity>
-        </View>
-      );
+        <Header handleClearList={handleClearList} navigateToBuying={() => navigation.navigate('Buying')} />
+      )
+
     },
   });
-  const [items, setItems] = useState<Product[]>([]);
-  const [newItem, setNewItem] = useState('');
-  const [productRepository, setRepository] = useState(new ProductReporitory());
+
+  const handleClearList = useCallback(() => {
+    productRepository.clearList().then(() => {
+      setItems([]);
+    }).catch(error => { })
+  }, [productRepository, items])
 
   useEffect(() => {
     async function loadItems() {
-      try {
-        const list = await productRepository.findAll();
-        setItems(list);
-      } catch{
-      }
+      const list = await productRepository.findAll();
+      setItems(list);
     }
     loadItems();
-  }, [])
-
+  }, [productRepository])
 
   const handleAddItem = useCallback(() => {
     productRepository.create(
@@ -55,8 +54,21 @@ const List: React.FC<ListProps> = ({ navigation }) => {
         name: newItem
       }).then(product => {
         setItems([...items, product]);
+        setNewItem('');
+      }).catch(error => {
       })
-  }, [setItems, items, newItem]);
+  }, [setItems, items, newItem, productRepository]);
+
+  const handleDeleteItem = useCallback((id: string) => {
+    productRepository.delete(id).then(() => {
+      const list = items;
+      const index = items.findIndex(product => product.id === id);
+      list.splice(index, 1);
+
+      setItems([...list]);
+    }).catch(error => {
+    })
+  }, [productRepository, items])
 
   return (
     <View style={styles.container}>
@@ -65,9 +77,7 @@ const List: React.FC<ListProps> = ({ navigation }) => {
         data={items}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <View style={styles.productContainer}>
-            <Text style={styles.productText}>{item.name}</Text>
-          </View>
+          <ListItem item={item} handleDeleteItem={handleDeleteItem} />
         )}
       />
       <View style={styles.newProduct}>

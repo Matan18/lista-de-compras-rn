@@ -12,15 +12,16 @@ import styles from './styles';
 
 const Buying: React.FC<BuyingProps> = ({ navigation }) => {
   const [items, setItems] = useState<Product[]>([]);
-  const [productRepository, setRepository] = useState(new ProductReporitory());
+  const productRepository = useMemo(() => {
+    return new ProductReporitory();
+  }, [])
 
   useEffect(() => {
     async function loadItems() {
       try {
         const list = await productRepository.findAll();
         setItems(list);
-      } catch{
-      }
+      } catch{ }
     }
     loadItems();
   }, [])
@@ -32,17 +33,26 @@ const Buying: React.FC<BuyingProps> = ({ navigation }) => {
 
   const handleUpdateItem = useCallback(
     (item: Product) => {
-      console.log(item);
       productRepository.update(item).then(productUpdated => {
         const list = items;
         const index = items.findIndex(prod => prod.id === productUpdated.id);
-
         list[index] = productUpdated;
         setItems([...list]);
       })
     },
     [items],
   );
+
+  const handleDeleteItem = useCallback((id: string) => {
+    productRepository.delete(id).then(() => {
+      const list = items;
+      const index = items.findIndex(product => product.id === id);
+      list.splice(index, 1);
+      setItems([...list]);
+    }).catch(error => {
+    })
+  }, [productRepository, items])
+
   const totalValue = useMemo(() => {
     const value = items.reduce((sum, item) => {
       if (item.checked) {
@@ -53,13 +63,14 @@ const Buying: React.FC<BuyingProps> = ({ navigation }) => {
     }, 0);
     return value.toFixed(2);
   }, [items]);
+
   return (
     <View style={styles.container}>
       <FlatList
         data={items}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <BuyingItem item={item} updateItem={handleUpdateItem} />
+          <BuyingItem item={item} updateItem={handleUpdateItem} handleDeleteItem={handleDeleteItem} />
         )}
       />
       <View style={styles.totalViewBox}>
