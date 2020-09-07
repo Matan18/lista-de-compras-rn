@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "lista-de-compras-rn",
+    "name": "Lista De Compras",
     "slug": "lista-de-compras-rn",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,10 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.matandriola.buylist"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "android": {
+      "package": "com.matandriola.buylist"
     }
   }
 }
